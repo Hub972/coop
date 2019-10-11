@@ -1,0 +1,23 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+
+
+ <div class="text-center">
+              <img class="center" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+            <h3><a href="#">{{ prd.category }}</a></h3>
+                <p>{{ prd.name }}</p>
+                 <p>{{ prd.information }}</p>
+                 <p>{{ prd.price }} euro(s)</p>
+
+
+<form class="form-inline" enctype="multipart/form-data" action="{% url 'store:infoProduct' prdId=prd.id%}" method="post">
+<div class="form-group">
+   {% csrf_token %}
+{{ form }}
+    <button type="submit" class="btn btn-success">Modifier</button>
+</div>
+</form>
+     </div>
+{% endblock %}

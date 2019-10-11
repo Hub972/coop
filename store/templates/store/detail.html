@@ -1,0 +1,30 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+
+
+ <div class="text-center">
+              <img class="center" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+            <h3>{{ prd.category }}</h3>
+                <p>{{ prd.name }}</p>
+                 <p>{{ prd.information }}</p>
+                 <p>{{ prd.price }} euro(s)</p>
+     {% if staff == False %}
+     <form class="form-inline" action="{% url 'store:book' prd_id=prd.id %}" method="post">
+<div class="form-group">
+   {% csrf_token %}
+    <p>Commandez maintenant et récupérez le directement chez votre fermier.</p>
+{{ form }}
+    <button type="submit" class="btn btn-success">Réserver</button>
+</div>
+</form>
+     {% endif %}
+     {% if prd.idSeller.id == userId %}
+<button class="submit" type="button"><a href="{% url 'store:infoProduct' prdId=prd.id %}">Modifier produit</a></button>
+<button class="submit" type="button"><a href="{% url 'store:delPrd' prdId=prd.id %}" style="color:red;">Suprimer produit</a></button>
+{% endif %}
+ </div>
+
+
+{% endblock %}

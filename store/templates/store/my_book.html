@@ -1,0 +1,19 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<p>Commande: <em style="color:red;">non lue</em> - <em style="color:orange;">prise en compte</em>
+   - <em style="color:green;">prête</em> - <em style="color:blue;">récupérée</em></p>
+<ol>
+{% for b in book %}
+    {% if b.status == 1 %}
+    <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:red;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+    {% elif b.status == 2 %}
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:orange;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+    {% elif b.status == 3 %}
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:green;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+    {% elif b.status == 4 %}
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:blue;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+
+    {% endif %}
+    {% endfor %}
+</ol>
+{% endblock %}

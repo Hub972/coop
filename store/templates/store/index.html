@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+{% if prdAdd == True %}<p style="color:green;">Vous avez ajouter un produit</p>{% endif %}
+<form class="form-inline text-center" action="{% url 'store:search'%}" method="post">
+<div class="form-group text-center">
+   {% csrf_token %}
+{{ form }}
+    <button type="submit" class="btn btn-success">Rechercher</button>
+</div>
+</form>
+
+{% endblock %}
+
+

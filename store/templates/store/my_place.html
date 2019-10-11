@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+<ul>
+    <li> Nom : {{ name }}</li>
+    <li> Email: {{ email }}</li>
+    <li> Numéro rue: {{ number }}</li>
+    <li> Rue: {{ street }}</li>
+    <li> Ville: {{country }}</li>
+    <li> Code postal: {{ postalCode }}</li>
+    <li> Téléphone: 0{{ tel }}</li>
+    <li> Information: {{ information }}</li>
+</ul>
+<button class="submit" type="button"><a href="{% url 'store:modifInfo' %}">Modifier information</a></button>
+<button class="submit" type="button"><a href="{% url 'store:manageBook' %}">Gérer mes commandes</a></button>
+{% if isStaff == True %}
+<button class="submit" type="button"><a href="{% url 'store:addProduct' %}">Ajouter produit</a></button>
+<button class="submit" type="button"><a href="{% url 'store:displayProductFarmer' %}">Afficher tous vos produit</a></button>
+{% endif %}
+<button class="submit" type="button"><a href="{% url 'store:logOut' %}">Me déconnecter</a></button>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+
+
+ <div class="text-center">
+              <img class="center" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+            <h3>{{ prd.category }}</h3>
+                <p>{{ prd.name }}</p>
+                 <p>{{ prd.information }}</p>
+                 <p>{{ prd.price }} euro(s)</p>
+                <p> Quantité: {{ quant }}</p>
+                <p> Prix total: {{ ttc }} euro(s) ttc</p>
+ {% if status == 1 %}
+    <p style="color:red;">La commande est non lue.</p>
+    {% elif status == 2 %}
+     <p style="color:orange;">La commande est prise en compte</p>
+    {% elif status == 3 %}
+     <p style="color:green;">La commande est prête.</p>
+    {% elif status == 4 %}
+<p style="color:blue;">La commande est récupérée.</p>
+    {% endif %}
+     {% if staff == False %}
+     <p>Vendeur:</p>
+     <p>{{ name }} {{ email }}</p>
+     <p>{{ number }} {{ street }} {{ country }} {{ postalCode }} </p>
+     <p>0{{ tel }}</p>
+     {% else %}
+     <h3>{{ user.username }}</h3>
+  <p>{{ infoc.number }} {{ infoc.street }} {{ infoc.country }} {{ infoc.postalCode }}</p>
+     <p>Tél : {{ infoc.telephone }}</p>
+ <form class="form-inline" action="{% url 'store:changeStatus' bookId=idBook%}" method="post">
+<div class="form-group">
+   {% csrf_token %}
+        {{ form.status }}
+    <button type="submit" class="btn btn-success">Changer de status</button>
+</div>
+          </form>
+
+     {% endif %}
+
+ </div>
+
+
+{% endblock %}

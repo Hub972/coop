@@ -1,0 +1,12 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+<form class="form-inline" action="{% url 'store:conUser'%}" method="post">
+<div class="form-group">
+   {% csrf_token %}
+{{ form }}
+    <button type="submit" class="btn btn-success">Se connecter</button>
+</div>
+</form>
+{% endblock %}

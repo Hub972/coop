@@ -1,0 +1,21 @@
+{% extends 'store/base.html'%}
+
+{% block content %}
+<ul>
+    <li> Nom : {{ name }}</li>
+    <li> Email: {{ email }}</li>
+    <li> Numéro rue: {{ number }}</li>
+    <li> Rue: {{ street }}</li>
+    <li> Ville: {{country }}</li>
+    <li> Code postal: {{ postalCode }}</li>
+    <li> Téléphone: 0{{ tel }}</li>
+    <li> Information: {{ information }}</li>
+</ul>
+<form class="form-inline" action="{% url 'store:modifInfo'%}" method="post">
+<div class="form-group">
+   {% csrf_token %}
+{{ form }}
+    <button type="submit" class="btn btn-success">Modifier</button>
+</div>
+</form>
+{% endblock %}
