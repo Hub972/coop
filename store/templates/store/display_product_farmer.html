@@ -6,7 +6,7 @@
 
  <div class="col-sm-4 text-center">
             <a href="{% url 'store:detail' product_id=prd.id %}">
-              <img class="img-responsive" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+              <img class="img-responsive" src="{{ prd.picture.url }}" alt="{{ prd.name }}" width="auto" height="300">
             </a>
             <h3><a href="#">{{ prd.category }}</a></h3>
                 <p>{{ prd.name }}</p>
