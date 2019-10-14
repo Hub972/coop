@@ -25,7 +25,7 @@ SECRET_KEY = 'u*&3n@!1zdn9!j$8hsq(!j^itq^o!+_7=cj49p$ws1^9ld_u(n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '178.62.205.183']
 
 
 # Application definition
@@ -128,3 +128,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/home/stud/Documents/openclassrooms/tp13/coop/coop/store/static/'
 ]
+if os.environ.get('ENV') == 'PRODUCTION':
+
+    # Static files settings
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+    # Extra places for collectstatic to find static files.
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_ROOT, 'static'),
+    )
