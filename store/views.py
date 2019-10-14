@@ -14,7 +14,10 @@ from .utils import send_simple_message
 
 def index(request):
     form = SearchForm()
-    return render(request, 'store/index.html', context={'form': form})
+    prd = get_list_or_404(Product)
+    products = prd[:3]
+    return render(request, 'store/index.html', context={'form': form, 'products': products})
+
 
 
 def register(request):
