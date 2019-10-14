@@ -2,32 +2,6 @@
 
 
 {% block content %}
-{% if prdAdd == True %}<p style="color:green;">Vous avez ajouter un produit</p>{% endif %}
-<form class="form-inline text-center" action="{% url 'store:search'%}" method="post">
-<div class="form-group text-center">
-   {% csrf_token %}
-{{ form }}
-    <button type="submit" class="btn btn-success">Rechercher</button>
-</div>
-</form>
-<div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Bienvenue à vous qui voulez faire des économies, à vous qui voulez savoir d’où viennent vos
-                        produits, ici vous êtes à la bonne place. On vous permet de couper la chaîne de distribution
-                        pour vous et  le fermier du coin. Que du bonheur !!</p>
-                </div>
-            </div>
-<br><br><br>
-{% for prd in products %}
-<div class="col-sm-4 text-center">
-            <a href="{% url 'store:detail' product_id=prd.id %}">
-              <img class="img-responsive" src="{{ prd.picture.url }}" alt="{{ prd.name }}" width="auto" height="300">
-            </a>
-            <h3><a href="#">{{ prd.category }}</a></h3>
-                <p>{{ prd.name }}</p>
-     {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
-             </div>{% endfor %}
 
 {% endblock %}
-
 

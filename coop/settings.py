@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
-from .h_file import SKEY, PASS
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SKEY
+SECRET_KEY = 'u*&3n@!1zdn9!j$8hsq(!j^itq^o!+_7=cj49p$ws1^9ld_u(n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mycoop',
         'USER': 'stud',
-        'PASSWORD': PASS,
+        'PASSWORD': 'Honneur',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -126,13 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 INTERNAL_IPS = ['127.0.0.1']
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/home/stud/Documents/openclassrooms/tp13/coop/coop/store/static/'
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = '/media/'
-SECURE_SSL_REDIRECT = False
-
