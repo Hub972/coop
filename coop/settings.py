@@ -14,7 +14,7 @@ import os
 
 import dj_database_url
 
-from .h_file import SKEY, PASS
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if os.environ.get('ENV') != 'PRODUCTION':
-    SECRET_KEY = SKEY
+    from .h_file import SKEY, PASS
+
+SECRET_KEY = SKEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':

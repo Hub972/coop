@@ -1,6 +1,7 @@
 import requests
-
-from ._api_key import API_KEY
+import os
+if os.environ.get('ENV') != 'PRODUCTION':
+    from ._api_key import API_KEY
 
 
 def send_simple_message(dst, subject, txt):
