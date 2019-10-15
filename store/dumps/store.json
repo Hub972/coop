@@ -1,0 +1,1 @@
+[{"model": "store.infouser", "pk": 1, "fields": {"number": 6, "country": "renne", "postalCode": 34500, "telephone": 987654323, "information": "Hello world", "idUser": 2}}, {"model": "store.infouser", "pk": 2, "fields": {"number": 3, "country": "Lamballe", "postalCode": 22400, "telephone": 12321232, "information": "Tous produits de ferme", "idUser": 3}}
