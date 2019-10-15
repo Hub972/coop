@@ -26,8 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 if os.environ.get('ENV') != 'PRODUCTION':
     from .h_file import SKEY, PASS
-
-SECRET_KEY = SKEY
+    SECRET_KEY = SKEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
