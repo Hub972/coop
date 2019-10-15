@@ -32,6 +32,7 @@ if os.environ.get('ENV') != 'PRODUCTION':
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
     PASS = os.environ.get('PASS')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 else:
     DEBUG = True
 
