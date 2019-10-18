@@ -15,4 +15,5 @@ services:
 
 env: DJANGO_SETTINGS_MODULE=coop.travis
 
-
+script:
+  - ./manage.py test
