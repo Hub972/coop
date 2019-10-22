@@ -44,10 +44,12 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="{% url 'store:allProducts' %}">Tous nos produits</a>
-
+                    {% if conButn == False %}
                     <li><a href="{% url 'store:register' %}">S'inscrire</a></li>
                     <li><a href="{% url 'store:conUser' %}">Se connecter</a></li>
+                    {% elif conButn == True %}
                     <li><a href="{% url 'store:myPlace' %}">Mon profile</a> </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -14,13 +14,18 @@ from .utils import send_simple_message
 
 def index(request):
     form = SearchForm()
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     prd = get_list_or_404(Product)
     products = prd[:3]
-    return render(request, 'store/index.html', context={'form': form, 'products': products})
-
+    return render(request, 'store/index.html', context={'form': form, 'products': products, 'conButn': conButn})
 
 
 def register(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     if request.method == 'POST':
         form = RegisterForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -47,20 +52,24 @@ def register(request):
                     infUser.information = information
                     infUser.idUser = u
                     infUser.save()
-                    return render(request, 'store/index.html', context={'thanks': True, 'name': name})
+                    return render(request, 'store/index.html', context={'thanks': True, 'name': name,
+                                                                        'conButn': conButn
+                                                                        })
             else:
                 form = RegisterForm()
                 context = {
                     'form': form,
-                    'badInf': True
+                    'badInf': True,
+                    'conButn': conButn
                 }
                 return render(request, 'store/register.html', context)
 
     form = RegisterForm(auto_id=False)
-    return render(request, 'store/register.html', context={'form': form})
+    return render(request, 'store/register.html', context={'form': form, 'conButn': conButn})
 
 
 def connect_user(request):
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -70,24 +79,29 @@ def connect_user(request):
             if user is None:
                 form = ProfileForm
                 context = {
-                    'form': form
+                    'form': form,
+                    'conButn': False
                 }
                 return render(request, 'store/connection.html', context)
             else:
                 login(request, user)
                 form = SearchForm()
-                context = {'form': form}
+                context = {'form': form, 'conButn': True}
                 if user.is_staff:
                     context = {'isStaff': True,
-                               "form": form
+                               "form": form,
+                               "conButn": True
                                }
                 return render(request, 'store/index.html', context)
     form = ProfileForm()
-    return render(request, 'store/connection.html', context={'form': form})
+    return render(request, 'store/connection.html', context={'form': form, 'conButn': True})
 
 
 @login_required(login_url='store:conUser')
 def my_place(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     user = request.user.id
     infUser = get_object_or_404(User, pk=user)
     name = infUser.username
@@ -111,14 +125,18 @@ def my_place(request):
         'postalCode': postalCode,
         'information': information,
         'tel': tel,
-        'isStaff': isStaff
+        'isStaff': isStaff,
+        'conButn': conButn
     }
     return render(request, 'store/my_place.html', context)
 
 
 def add_product_to_db(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     form = ProductForm()
-    context = {'form': form}
+    context = {'form': form, 'conButn': conButn}
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -142,12 +160,15 @@ def add_product_to_db(request):
                 )
                 prd.save
                 if user.is_staff:
-                    context = {'isStaff': True, 'prdAdd': True}
+                    context = {'isStaff': True, 'prdAdd': True, 'conButn': conButn}
                 return render(request, 'store/index.html', context)
     return render(request, 'store/farmer_count.html', context)
 
 
 def display_my_product(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     user = request.user.id
     product = get_list_or_404(Product, idSeller=user)
     seller = get_object_or_404(User, pk=user)
@@ -155,12 +176,16 @@ def display_my_product(request):
     context = {
         'product': product,
         'seller': seller,
-        'infoSeller': infoSeller
+        'infoSeller': infoSeller,
+        'conButn': conButn
     }
     return render(request, 'store/display_product_farmer.html', context)
 
 
 def detail(request, product_id):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     userId = request.user.id
     product = get_object_or_404(Product, pk=product_id)
     staff = False
@@ -175,7 +200,8 @@ def detail(request, product_id):
         'info': infoSeller,
         'form': form,
         'staff': staff,
-        'userId': userId
+        'userId': userId,
+        'conButn': conButn
     }
     return render(request, 'store/detail.html', context)
 
@@ -222,15 +248,20 @@ def book_product(request, prd_id):
                   f"Je vous remercie d'avance pour votre réactivitée." \
                   f"Cordialement la coop de Lamballe.  "
             send_simple_message(dst, subject, txt)
+            conButn = True
             context = {
-                'info': seller
+                'info': seller,
+                'conButn': True
             }
             return render(request, 'store/confirmation.html', context)
 
 
 def display_all_products(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     products = get_list_or_404(Product)
-    return render(request, 'store/display_product_farmer.html', context={'product': products})
+    return render(request, 'store/display_product_farmer.html', context={'product': products, 'conButn': conButn})
 
 
 def change_book_status(request, bookId):
@@ -264,8 +295,8 @@ def manage_book(request):
         book = get_list_or_404(Bascket, idClient=infUser)
     context = {
         'book': book,
-        'staff': staff
-
+        'staff': staff,
+        'conButn': True
     }
     return render(request, 'store/my_book.html', context)
 
@@ -294,6 +325,9 @@ def book_detail(request, idProduct, idBook):
         email = p.email
         name = p
     ttc = product.price * book.quantity
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     context = {
         'prd': product,
         'infoc': infoClient,
@@ -311,7 +345,8 @@ def book_detail(request, idProduct, idBook):
         'idBook': idBook,
         'status': book.status,
         'quant': book.quantity,
-        'ttc': ttc
+        'ttc': ttc,
+        'conButn': conButn
     }
     return render(request, 'store/detail_book.html', context)
 
@@ -369,6 +404,9 @@ def change_info(request):
             isStaff = True
         # form for change info
         form = RegisterModifForm()
+        conButn = True
+        if request.user.id is None:
+            conButn = False
         context = {
             'name': name,
             'email': email,
@@ -379,7 +417,8 @@ def change_info(request):
             'information': information,
             'tel': tel,
             'isStaff': isStaff,
-            'form': form
+            'form': form,
+            'conButn': conButn
         }
         return render(request, 'store/modif_info.html', context)
 
@@ -416,7 +455,8 @@ def modif_product_info(request, prdId):
         context = {
             'prd': product,
             'info': infoSeller,
-            'form': form
+            'form': form,
+            'conButn' : True
 
         }
         return render(request, 'store/modif_product.html', context)
@@ -435,6 +475,9 @@ def logout_user(request):
 
 
 def search_product(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
     if request.method == 'POST':
         form = SearchForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -446,7 +489,8 @@ def search_product(request):
                 if not prds.exists():
                     prds = None
                 context = {
-                    'prds': prds
+                    'prds': prds,
+                    'conButn': conButn
                 }
                 return render(request, 'store/display_search.html', context)
 
