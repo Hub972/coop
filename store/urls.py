@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'del_product/(?P<prdId>[0-9]+)/$', views.del_product, name='delPrd'),
     url(r'^logout_user/$', views.logout_user, name='logOut'),
     url(r'^search_product', views.search_product, name='search'),
-    url(r'^$', views.index, name='index')
+    url(r'^$', views.index, name='index'),
+    url(r'^terms/$', views.display_terms, name='terms')
 ]

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import random
 
 from .models import InfoUser, Product, Bascket
@@ -170,11 +171,23 @@ def display_my_product(request):
     if request.user.id is None:
         conButn = False
     user = request.user.id
-    product = get_list_or_404(Product, idSeller=user)
+    listProducts = []
+    products = get_list_or_404(Product, idSeller=user)
+    for prd in products:
+        product = get_object_or_404(Product, pk=prd.id)
+        listProducts.append(product)
+    paginator = Paginator(listProducts, 3)
+    page = request.GET.get('page')
+    try:
+        pProducts = paginator.get_page(page)
+    except PageNotAnInteger:
+        pProducts = paginator.get_page(1)
+    except EmptyPage:
+        pProducts = paginator.get_page(paginator.num_pages)
     seller = get_object_or_404(User, pk=user)
     infoSeller = get_object_or_404(InfoUser, idUser=user)
     context = {
-        'product': product,
+        'product': pProducts,
         'seller': seller,
         'infoSeller': infoSeller,
         'conButn': conButn
@@ -260,8 +273,21 @@ def display_all_products(request):
     conButn = True
     if request.user.id is None:
         conButn = False
+    pproducts = []
     products = get_list_or_404(Product)
-    return render(request, 'store/display_product_farmer.html', context={'product': products, 'conButn': conButn})
+    for prd in products:
+        prepaPrd = get_object_or_404(Product, pk=prd.id)
+        pproducts.append(prepaPrd)
+    paginator = Paginator(pproducts, 3)
+    page = request.GET.get('page')
+    try:
+        productsp = paginator.get_page(page)
+    except PageNotAnInteger:
+        productsp = paginator.get_page(1)
+    except EmptyPage:
+        productsp = paginator.get_page(paginator.num_pages)
+    print(productsp)
+    return render(request, 'store/display_product_farmer.html', context={'product': productsp, 'conButn': conButn})
 
 
 def change_book_status(request, bookId):
@@ -495,6 +521,11 @@ def search_product(request):
                 return render(request, 'store/display_search.html', context)
 
 
+def display_terms(request):
+    conButn = True
+    if request.user.id is None:
+        conButn = False
+    return render(request, 'store/terms.html', context={'conButn': conButn})
 
 
 

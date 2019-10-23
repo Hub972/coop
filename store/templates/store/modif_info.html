@@ -11,6 +11,8 @@
     <li> Téléphone: 0{{ tel }}</li>
     <li> Information: {{ information }}</li>
 </ul>
+<h3 class="text-center">Veuiilez renseigner uniquement les champs souhaitées.</h3>
+<hr>
 <form class="form-inline" action="{% url 'store:modifInfo'%}" method="post">
 <div class="form-group">
    {% csrf_token %}

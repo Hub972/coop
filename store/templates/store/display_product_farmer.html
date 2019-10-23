@@ -12,6 +12,20 @@
                 <p>{{ prd.name }}</p>
      {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
              </div>{% endfor %}
+<div class="pagination">
+  <div class="clearfix"></div>
+  <nav aria-label="">
+    <ul class="pager">
+        <div class="row">
+      {% if product.has_previous %}
+        <div class="col-md-6 text-left"><li class="col-md-6"><a href="?page={{ product.previous_page_number }}">Précédent</a></li></div>
+      {% endif %}
+      {% if product.has_next %}
+        <div class="col-md-6 text-right"><li><a href="?page={{ product.next_page_number }}">Suivant</a></li></div>
+      {% endif %}</div>
+    </ul>
+  </nav>
+</div>
 
 
 {% endblock %}
