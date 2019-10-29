@@ -3,7 +3,7 @@ from django.forms.utils import ErrorList
 
 
 class RegisterForm(forms.Form):
-    nom = forms.CharField(
+    name = forms.CharField(
         label='',
         max_length=50,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Nom'}),
@@ -34,23 +34,23 @@ class RegisterForm(forms.Form):
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Téléphone'}),
         required=False
     )
-    numero = forms.IntegerField(
+    number = forms.IntegerField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Numero de rue'}),
         required=True
     )
-    rue = forms.CharField(
+    street = forms.CharField(
         label='',
         max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Rue'}),
         required=True
     )
-    codePostal = forms.IntegerField(
+    postalCode = forms.IntegerField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Code postal'}),
         required=True
     )
-    ville = forms.CharField(
+    country = forms.CharField(
         label='',
         max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Ville'}),
@@ -147,7 +147,7 @@ class StatusForm(forms.Form):
 
 
 class RegisterModifForm(forms.Form):
-    nom = forms.CharField(
+    name = forms.CharField(
         label='',
         max_length=50,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Nom'}),
@@ -178,23 +178,23 @@ class RegisterModifForm(forms.Form):
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Téléphone'}),
         required=False
     )
-    numero = forms.IntegerField(
+    number = forms.IntegerField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Numero de rue'}),
         required=False
     )
-    rue = forms.CharField(
+    street = forms.CharField(
         label='',
         max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Rue'}),
         required=False
     )
-    codePostal = forms.IntegerField(
+    postalCode = forms.IntegerField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Code postal'}),
         required=False
     )
-    ville = forms.CharField(
+    country = forms.CharField(
         label='',
         max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'Ville'}),

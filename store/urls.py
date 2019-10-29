@@ -13,12 +13,12 @@ urlpatterns = [
     url(r'^display_all_products', views.display_all_products, name='allProducts'),
     url(r'^my_book/$', views.manage_book, name='manageBook'),
     url(r'^detail_book/(?P<idProduct>[0-9]+)/(?P<idBook>[0-9]+)$', views.book_detail, name='detailBook'),
-    url(r'^change_status/(?P<bookId>[0-9]+)$$', views.change_book_status, name='changeStatus'),
+    url(r'^change_status/(?P<bookId>[0-9]+)/$', views.change_book_status, name='changeStatus'),
     url(r'^modif_info/$', views.change_info, name='modifInfo'),
     url(r'modif_product/(?P<prdId>[0-9]+)/$', views.modif_product_info, name='infoProduct'),
     url(r'del_product/(?P<prdId>[0-9]+)/$', views.del_product, name='delPrd'),
     url(r'^logout_user/$', views.logout_user, name='logOut'),
-    url(r'^search_product', views.search_product, name='search'),
+    url(r'^search_product/$', views.search_product, name='search'),
     url(r'^$', views.index, name='index'),
     url(r'^terms/$', views.display_terms, name='terms')
 ]

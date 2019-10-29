@@ -30,14 +30,14 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
-            name = form.cleaned_data['nom']
+            name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             passwd = form.cleaned_data['passwd']
             confPasswd = form.cleaned_data['confPasswd']
-            num = form.cleaned_data['numero']
-            street = form.cleaned_data['rue']
-            country = form.cleaned_data['ville']
-            postalCode = form.cleaned_data['codePostal']
+            num = form.cleaned_data['number']
+            street = form.cleaned_data['street']
+            country = form.cleaned_data['country']
+            postalCode = form.cleaned_data['postalCode']
             tel = form.cleaned_data['telephone']
             information = form.cleaned_data['information']
             if passwd == confPasswd:
@@ -387,25 +387,25 @@ def change_info(request):
         form = RegisterModifForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
             with transaction.atomic():
-                if form.cleaned_data['nom']:
-                    infUser.username = form.cleaned_data['nom']
+                if form.cleaned_data['name']:
+                    infUser.username = form.cleaned_data['name']
                 if form.cleaned_data['email']:
                     infUser.email = form.cleaned_data['email']
                 if form.cleaned_data['passwd']:
                     if form.cleaned_data['passwd'] == form.cleaned_data['confPasswd']:
                         infUser.password = form.cleaned_data['passwd']
                 infUser.save()
-                if form.cleaned_data['numero']:
-                    infUser2.number = form.cleaned_data['numero']
+                if form.cleaned_data['number']:
+                    infUser2.number = form.cleaned_data['number']
                     infUser2.save()
-                if form.cleaned_data['rue']:
-                    infUser2.street = form.cleaned_data['rue']
+                if form.cleaned_data['street']:
+                    infUser2.street = form.cleaned_data['street']
                     infUser2.save()
-                if form.cleaned_data['ville']:
-                    infUser2.country = form.cleaned_data['ville']
+                if form.cleaned_data['country']:
+                    infUser2.country = form.cleaned_data['country']
                     infUser2.save()
-                if form.cleaned_data['codePostal']:
-                    infUser2.postalCode = form.cleaned_data['codePostal']
+                if form.cleaned_data['postalCode']:
+                    infUser2.postalCode = form.cleaned_data['postalCode']
                     infUser2.save()
                 if form.cleaned_data['telephone']:
                     infUser2.telephone = form.cleaned_data['telephone']
