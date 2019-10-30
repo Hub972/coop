@@ -16,4 +16,4 @@ services:
 env: DJANGO_SETTINGS_MODULE=coop.travis
 
 script:
-  - python print('hello world')
+  - ./welcome.py
