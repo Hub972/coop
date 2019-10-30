@@ -300,7 +300,7 @@ def change_book_status(request, bookId):
                 book.status = status
                 book.save()
                 if status == '3':
-                    dst = "ass.yon@laposte.net"
+                    dst = book.idClient.idUser.email
                     subject = "Suivi de votre commande lacoop"
                     txt = f"Votre commande {book.cmdNumber} est prête vous pouvez allez sur votre profile pour toutes " \
                           f"les informations.\n Merci de votre confiance. "
@@ -316,9 +316,15 @@ def manage_book(request):
 
     if user.is_staff:
         staff = True
-        book = get_list_or_404(Bascket, idSeller=userId)
+        try:
+            book = get_list_or_404(Bascket, idSeller=userId)
+        except:
+            return redirect('../my_place/')
     else:
-        book = get_list_or_404(Bascket, idClient=infUser)
+        try:
+            book = get_list_or_404(Bascket, idClient=infUser)
+        except:
+            return redirect('../my_place/')
     context = {
         'book': book,
         'staff': staff,
