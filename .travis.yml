@@ -16,6 +16,5 @@ services:
 env: DJANGO_SETTINGS_MODULE=coop.travis
 
 script:
-  - ./manage.py migrate
-  - ./manage.py collectstatic
-  - ./manage.py runserver 0.0.0.0:8000
+  - python
+  - print('hello world')
