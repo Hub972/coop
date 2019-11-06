@@ -14,6 +14,7 @@ from .views import book_product, change_book_status, index, display_my_product, 
 
 class AppTestCase(TestCase):
     def setUp(self):
+        """init users, book and product"""
         self.clientUser = User()
         self.clientUser.username = 'Nath'
         self.clientUser.email = 'nath@mail.com'
@@ -28,7 +29,8 @@ class AppTestCase(TestCase):
         self.infoUser.information = "belle femme"
         self.infoUser.idUser = self.clientUser
         self.infoUser.save()
-        self.farmer = User.objects.create_user(username='farmer', email='farmer@mail.com', password='passwd', is_staff=True)
+        self.farmer = User.objects.create_user(username='farmer', email='farmer@mail.com', password='passwd',
+                                               is_staff=True)
         self.infoFarmer = InfoUser()
         self.infoFarmer.number = 1
         self.infoFarmer.street = "de la campagne"
@@ -131,11 +133,13 @@ class AppTestCase(TestCase):
         self.assertEqual(responsePost.status_code, 200)
 
     def display_all_product(self):
+        """test if all products can be display"""
         response = self.client.get(reverse('store:allProducts'))
         print(response.status_code)
         self.assertTemplateUsed(response, 'store/display_product_farmer.html')
 
     def test_display_prds_farmer(self):
+        """test if products farmer can be display"""
         factory = RequestFactory()
         req = factory.get(r'diplay_product_farmer/$')
         req.user = self.farmer
@@ -143,6 +147,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_detail_product(self):
+        """test display detail product"""
         factory = RequestFactory()
         req = factory.get('^(?P<product_id>[0-9]+)/$')
         req.user = self.clientUser
@@ -150,6 +155,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_modif_product(self):
+        """test change product information"""
         responseGet = self.client.get(reverse('store:infoProduct', args=[self.product.id, ]))
         self.assertEqual(responseGet.status_code, 200)
         factory = RequestFactory()
@@ -167,6 +173,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_search_product(self):
+        """test if you can search a product"""
         factory = RequestFactory()
         req = factory.post(r'^search_product/$', data={'query': u'salade'})
         req.user = self.clientUser
@@ -187,6 +194,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_manage_book(self):
+        """test if farmer can connect to manage book"""
         factory = RequestFactory()
         req = factory.get(r'^my_book/$')
         req.user = self.farmer
@@ -194,6 +202,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_book_detail(self):
+        """test if farmer can connect to book detail"""
         factory = RequestFactory()
         req = factory.get(r'^detail_book/(?P<idProduct>[0-9]+)/(?P<idBook>[0-9]+)$')
         req.user = self.farmer
@@ -201,6 +210,7 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_change_status_book(self):
+        """test if farmer can change status book"""
         factory = RequestFactory()
         dataStatus = {
             'status': u'2'
@@ -234,6 +244,7 @@ class AppTestCase(TestCase):
         self.assertEqual(responsePost.status_code, 302)
 
     def test_del_product(self):
+        """test if farmer can delete a product"""
         response = self.client.get(reverse('store:delPrd', args=[self.product.id, ]))
         self.assertEqual(response.status_code, 302)
 
@@ -243,12 +254,14 @@ class AppTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_display_terms(self):
+        """test display terms page"""
         response = self.client.get(reverse('store:terms'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'store/terms.html')
 
 
 class MockCase(TestCase):
+    """mock for test API mailgun"""
     RESPONSE = {
         'Response': {
             'request': {

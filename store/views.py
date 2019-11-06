@@ -10,10 +10,13 @@ from .models import InfoUser, Product, Bascket
 from .forms import RegisterForm, ParagraphErrorList, ProfileForm, ProductForm, BascketForm, StatusForm, \
     RegisterModifForm, ProductModifForm, SearchForm
 from .utils import send_simple_message
+
+
 # Create your views here.
 
 
 def index(request):
+    """Main page"""
     form = SearchForm()
     conButn = True
     if request.user.id is None:
@@ -24,6 +27,7 @@ def index(request):
 
 
 def register(request):
+    """Register page for all users"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -53,8 +57,9 @@ def register(request):
                     infUser.information = information
                     infUser.idUser = u
                     infUser.save()
+                    form = SearchForm()
                     return render(request, 'store/index.html', context={'thanks': True, 'name': name,
-                                                                        'conButn': conButn
+                                                                        'conButn': conButn, 'form': form
                                                                         })
             else:
                 form = RegisterForm()
@@ -70,7 +75,7 @@ def register(request):
 
 
 def connect_user(request):
-
+    """Page for connect the user"""
     if request.method == 'POST':
         form = ProfileForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -100,6 +105,7 @@ def connect_user(request):
 
 @login_required(login_url='store:conUser')
 def my_place(request):
+    """Management page, user can follow or change this own information"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -133,6 +139,7 @@ def my_place(request):
 
 
 def add_product_to_db(request):
+    """Create a new product for the coop"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -167,6 +174,7 @@ def add_product_to_db(request):
 
 
 def display_my_product(request):
+    """Display all products farmer"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -196,6 +204,7 @@ def display_my_product(request):
 
 
 def detail(request, product_id):
+    """Display product information"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -221,6 +230,7 @@ def detail(request, product_id):
 
 @login_required(login_url='store:conUser')
 def book_product(request, prd_id):
+    """Book a product, make a ordered number and send a mail to each concerned"""
     if request.method == "POST":
         form = BascketForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -254,14 +264,12 @@ def book_product(request, prd_id):
 
             product = get_object_or_404(Product, pk=prd_id)
             seller = User.objects.filter(username=product.idSeller)
-            #dst = seller.email
             dst = "ass.yon@laposte.net"
             subject = "Nouvelle commande de la coop"
             txt = f"Une commande a été éffectuée sont numéro est le {cmd}.\n" \
                   f"Je vous remercie d'avance pour votre réactivitée." \
                   f"Cordialement la coop de Lamballe.  "
             send_simple_message(dst, subject, txt)
-            conButn = True
             context = {
                 'info': seller,
                 'conButn': True
@@ -270,6 +278,7 @@ def book_product(request, prd_id):
 
 
 def display_all_products(request):
+    """Display all products for user"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -291,6 +300,7 @@ def display_all_products(request):
 
 
 def change_book_status(request, bookId):
+    """Change book status and if it equal to 3 send a mail"""
     if request.method == 'POST':
         form = StatusForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -302,13 +312,14 @@ def change_book_status(request, bookId):
                 if status == '3':
                     dst = book.idClient.idUser.email
                     subject = "Suivi de votre commande lacoop"
-                    txt = f"Votre commande {book.cmdNumber} est prête vous pouvez allez sur votre profile pour toutes " \
+                    txt = f"Votre commande {book.cmdNumber} est prête vous pouvez allez sur votre profile pour toutes" \
                           f"les informations.\n Merci de votre confiance. "
                     send_simple_message(dst, subject, txt)
-                return redirect('../my_book/')
+                return redirect('../../my_book/')
 
 
 def manage_book(request):
+    """Display all ordered"""
     userId = request.user.id
     user = get_object_or_404(User, pk=userId)
     infUser = get_object_or_404(InfoUser, idUser=userId)
@@ -318,12 +329,12 @@ def manage_book(request):
         staff = True
         try:
             book = get_list_or_404(Bascket, idSeller=userId)
-        except:
+        except Bascket.DoesNotExist:
             return redirect('../my_place/')
     else:
         try:
             book = get_list_or_404(Bascket, idClient=infUser)
-        except:
+        except Bascket.DoesNotExist:
             return redirect('../my_place/')
     context = {
         'book': book,
@@ -334,6 +345,7 @@ def manage_book(request):
 
 
 def book_detail(request, idProduct, idBook):
+    """Display a ordered detail"""
     userId = request.user.id
     user = get_object_or_404(User, pk=userId)
     staff = False
@@ -421,7 +433,7 @@ def change_info(request):
                     infUser2.save()
                 return redirect('../my_place/')
     else:
-        #user info
+        """user info"""
         name = infUser.username
         email = infUser.email
 
@@ -456,7 +468,7 @@ def change_info(request):
 
 
 def modif_product_info(request, prdId):
-    userId = request.user.id
+    """Farmer can change product information"""
     product = get_object_or_404(Product, pk=prdId)
     infoSeller = get_object_or_404(InfoUser, idUser=product.idSeller)
     if request.method == 'POST':
@@ -488,7 +500,7 @@ def modif_product_info(request, prdId):
             'prd': product,
             'info': infoSeller,
             'form': form,
-            'conButn' : True
+            'conButn': True
 
         }
         return render(request, 'store/modif_product.html', context)
@@ -502,11 +514,13 @@ def del_product(request, prdId):
 
 
 def logout_user(request):
+    """Disconnect user"""
     logout(request)
     return redirect('/')
 
 
 def search_product(request):
+    """Search a product about a query"""
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -528,12 +542,8 @@ def search_product(request):
 
 
 def display_terms(request):
+    """Display terms for user"""
     conButn = True
     if request.user.id is None:
         conButn = False
     return render(request, 'store/terms.html', context={'conButn': conButn})
-
-
-
-
-

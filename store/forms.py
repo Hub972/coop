@@ -3,6 +3,7 @@ from django.forms.utils import ErrorList
 
 
 class RegisterForm(forms.Form):
+    """Use for register user"""
     name = forms.CharField(
         label='',
         max_length=50,
@@ -65,6 +66,7 @@ class RegisterForm(forms.Form):
 
 
 class ProfileForm(forms.Form):
+    """Use for connect user"""
     name = forms.CharField(
         label='',
         widget=forms.TextInput(attrs={'class': 'form-group', 'placeholder': 'name'}),
@@ -80,6 +82,7 @@ class ProfileForm(forms.Form):
 
 
 class ProductForm(forms.Form):
+    """Use for add a new product"""
     CATCHOICE = [
         ('Fruit/Légume', 'Fruit/Légume'),
         ('Produit laitier', 'Produit laitier'),
@@ -124,6 +127,7 @@ class ProductForm(forms.Form):
 
 
 class BascketForm(forms.Form):
+    """Use for add a product quantity  to Basket"""
     quantity = forms.IntegerField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'form-group', 'placeholder': 'Quantité'}),
@@ -132,6 +136,7 @@ class BascketForm(forms.Form):
 
 
 class StatusForm(forms.Form):
+    """Use for change product status"""
     CHOICE = [
         (1, 'non lus'),
         (2, 'Pris en compte'),
@@ -147,6 +152,7 @@ class StatusForm(forms.Form):
 
 
 class RegisterModifForm(forms.Form):
+    """Use for change user information"""
     name = forms.CharField(
         label='',
         max_length=50,
@@ -208,8 +214,8 @@ class RegisterModifForm(forms.Form):
     )
 
 
-
 class ProductModifForm(forms.Form):
+    """Use for change product information """
     CATCHOICE = [
         ('Fruit/Légume', 'Fruit/Légume'),
         ('Produit laitier', 'Produit laitier'),
@@ -254,6 +260,7 @@ class ProductModifForm(forms.Form):
 
 
 class SearchForm(forms.Form):
+    """Use for search product"""
     query = forms.CharField(
         label='',
         max_length=500,
@@ -263,9 +270,12 @@ class SearchForm(forms.Form):
 
 
 class ParagraphErrorList(ErrorList):
+    """Catch form error"""
+
     def __str__(self):
         return self.as_divs()
 
     def as_divs(self):
-        if not self: return ''
+        if not self:
+            return ''
         return '<div class="errorlist">%s</div>' % ''.join(['<p class="small error">%s</p>' % e for e in self])

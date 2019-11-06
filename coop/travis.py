@@ -1,4 +1,6 @@
 from . import *
+"""Config for travis integration"""
+
 SECRET_KEY = "u*&3n@!1zdn9!j$8hsq(!j^itq^o!+_7=cj49jdhyetrsdfgte"
 
 DATABASES = {

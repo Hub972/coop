@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 
 class InfoUser(models.Model):
+    """Contain user information"""
     number = models.IntegerField(null=True)
     street = models.CharField(max_length=200, default="contacter client par mail pour info")
     country = models.CharField(max_length=200)
@@ -14,8 +15,8 @@ class InfoUser(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-
 class Product(models.Model):
+    """Contain product information"""
     CATCHOICE = [
         ('Fruit/Légume', 'Fruit/Légume'),
         ('Produit laitier', 'Produit laitier'),
@@ -33,6 +34,7 @@ class Product(models.Model):
 
 
 class Bascket(models.Model):
+    """Contain product ordered"""
     cmdNumber = models.IntegerField()
     quantity = models.IntegerField()
     time = models.DateTimeField(auto_now=True)
@@ -43,6 +45,7 @@ class Bascket(models.Model):
 
 
 class Delivery(models.Model):
+    """Contain status product ordered"""
     deliveryNumber = models.IntegerField(primary_key=True, unique=True)
     status = models.IntegerField(default=1)
     deliveryAdrss = models.CharField(max_length=600)
