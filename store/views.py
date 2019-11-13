@@ -263,7 +263,8 @@ def book_product(request, prd_id):
                 prd.save()
 
             product = get_object_or_404(Product, pk=prd_id)
-            seller = User.objects.filter(username=product.idSeller)
+            seller = get_object_or_404(User, pk=product.idSeller.id)
+            info = get_object_or_404(InfoUser, idUser=seller.id)
             dst = "ass.yon@laposte.net"
             subject = "Nouvelle commande de la coop"
             txt = f"Une commande a été éffectuée sont numéro est le {cmd}.\n" \
@@ -271,7 +272,8 @@ def book_product(request, prd_id):
                   f"Cordialement la coop de Lamballe.  "
             send_simple_message(dst, subject, txt)
             context = {
-                'info': seller,
+                'info': info,
+                'name': seller.username,
                 'conButn': True
             }
             return render(request, 'store/confirmation.html', context)
@@ -520,7 +522,7 @@ def logout_user(request):
 
 
 def search_product(request):
-    """Search a product about a query"""
+    """Search a product about a query """
     conButn = True
     if request.user.id is None:
         conButn = False
@@ -534,6 +536,7 @@ def search_product(request):
                 prds = Product.objects.filter(name__icontains=query)
                 if not prds.exists():
                     prds = None
+                    return render(request, 'store/display_search.html', context={'noPrds': True})
                 context = {
                     'prds': prds,
                     'conButn': conButn

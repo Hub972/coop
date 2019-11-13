@@ -1,9 +1,9 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-<p>Vous avez bien réservé votre produit vous pouvez suivre votre commande directement sur votre profile</p>
 <div class="text-center">
-<p>Récupérez votre produit chez {{ info.name }} {{ info.number }} {{ info.street }} {{ info.country }}
-{{ info.postalCode }}, vous pouvez le contacter au {{ info.telephone }} .</p>
+<p>Vous avez bien réservé votre produit vous pouvez suivre votre commande directement sur votre profile</p>
+<p>Récupérez votre produit chez {{ name }} {{ info.number }} rue {{ info.street }} {{ info.country }}
+{{ info.postalCode }}, vous pouvez le contacter au +33{{ info.telephone }} .</p>
 </div>
 {% endblock %}

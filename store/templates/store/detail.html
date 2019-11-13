@@ -5,7 +5,9 @@
 
 
  <div class="text-center">
+     {% if prd.picture.url != None %}
               <img class="center" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+     {% endif %}
             <h3>{{ prd.category }}</h3>
                 <p>{{ prd.name }}</p>
                  <p>{{ prd.information }}</p>

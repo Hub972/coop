@@ -5,13 +5,13 @@
 <ol>
 {% for b in book %}
     {% if b.status == 1 %}
-    <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:red;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+    <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:red;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Dernière activité: {{ b.time }} {{b.idProduct.name}} </a></li>
     {% elif b.status == 2 %}
-        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:orange;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:orange;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Dernière activité: {{ b.time }} {{b.idProduct.name}} </a></li>
     {% elif b.status == 3 %}
-        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:green;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:green;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Dernière activité: {{ b.time }} {{b.idProduct.name}} </a></li>
     {% elif b.status == 4 %}
-        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:blue;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Date de réservation: {{ b.time }} {{b.idProduct.name}} </a></li>
+        <li> <a href="{% url 'store:detailBook' idProduct=b.idProduct.id idBook=b.id %}" style="color:blue;"> Commande: {{ b.cmdNumber }} - Quantitée: {{ b.quantity }} - Dernière activité: {{ b.time }} {{b.idProduct.name}} </a></li>
 
     {% endif %}
     {% endfor %}

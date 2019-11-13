@@ -11,7 +11,8 @@
             <h3>{{ prd.category }}</h3>
                 <p>{{ prd.name }}</p>
      {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
-             </div>{% endfor %}
 
+             </div>{% endfor %}
+{% if noPrds == True %}<p class="text-center">Aucun produit correspond à votre demande.</p>{% endif %}
 
 {% endblock %}
