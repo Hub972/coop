@@ -23,8 +23,12 @@
 </form>
      {% endif %}
      {% if prd.idSeller.id == userId %}
+     <div class="col-sm-5 ">
 <button class="submit" type="button"><a href="{% url 'store:infoProduct' prdId=prd.id %}">Modifier produit</a></button>
-<button class="submit" type="button"><a href="{% url 'store:delPrd' prdId=prd.id %}" style="color:red;">Suprimer produit</a></button>
+     </div>
+     <div class="col-sm-7 ">
+     <button class="submit" type="button"><a href="{% url 'store:delPrd' prdId=prd.id %}" style="color:red;">Suprimer produit</a></button>
+     </div>
 {% endif %}
  </div>
 

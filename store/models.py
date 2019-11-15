@@ -45,7 +45,7 @@ class Bascket(models.Model):
 
 
 class Delivery(models.Model):
-    """Contain status product ordered"""
+    """Contain status product for future feature"""
     deliveryNumber = models.IntegerField(primary_key=True, unique=True)
     status = models.IntegerField(default=1)
     deliveryAdrss = models.CharField(max_length=600)

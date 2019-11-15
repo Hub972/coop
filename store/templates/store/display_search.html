@@ -5,11 +5,15 @@
 
 
  <div class="col-sm-4 text-center">
-            <a href="{% url 'store:detail' product_id=prd.id %}">
-              <img class="img-responsive" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
-            </a>
+
+              {% if prd.picture.url is not None %}
+                <img class="img-responsive" src="{{ prd.picture.url }}" alt="{{ prd.name }}">
+              {% endif %}
+
             <h3>{{ prd.category }}</h3>
+            <a href="{% url 'store:detail' product_id=prd.id %}">
                 <p>{{ prd.name }}</p>
+            </a>
      {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
 
              </div>{% endfor %}

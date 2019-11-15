@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import random
+import asyncio
 
 from .models import InfoUser, Product, Bascket
 from .forms import RegisterForm, ParagraphErrorList, ProfileForm, ProductForm, BascketForm, StatusForm, \
@@ -12,6 +13,7 @@ from .forms import RegisterForm, ParagraphErrorList, ProfileForm, ProductForm, B
 from .utils import send_simple_message
 
 
+loop = asyncio.get_event_loop()
 # Create your views here.
 
 
@@ -511,6 +513,9 @@ def modif_product_info(request, prdId):
 def del_product(request, prdId):
     """Farmer can del product here"""
     prd = get_object_or_404(Product, pk=prdId)
+    if Bascket.objects.filter(idProduct=prdId) is not None:
+        books = Bascket.objects.filter(idProduct=prdId)
+        [book.delete() for book in books]
     prd.delete()
     return redirect('/store/diplay_product_farmer/')
 
